@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roundrects</title>
+<style type="text/css">
+#output_container {
+width:100%;
+height:50%;
+margin:30px;	
+}
+
+#output_element {
+margin:auto;	
+}
+</style>
+</head>
+<body>
+<h1>roundrects</h1>
+<form onsubmit="return:false;">
+<fieldset>
+<select id="rect_width" name="rect_width">
+	<option value="1">1x width</option>
+	<option value="2">2x width</option>
+</select>
+<select id="rect_bg_color" name="rect_bg_color">
+	<option value="#e31937">Red (Cherry)</option>
+	<option value="#991f3d" selected="selected">Beet</option>
+	<option value="#ff6a00">Pumpkin</option>
+	<option value="#f2a200">Honey</option>
+	<option value="#a5acb0">Cloud</option>
+	<option value="#a1c4d0">Ice</option>	
+</select>
+<select id="rect_border_radius" name="rect_border_radius">
+	<option value="5px">5px border radius</option>
+	<option value="10px" selected="selected">10px border radius</option>
+	<option value="15px">15px border radius</option>
+	<option value="20px">20px border radius</option>
+	<option value="25px">25px border radius</option>
+</select>
+<select id="rect_icon" name="rect_icon">
+	<option value="">No icon</option>
+	<option value="icon.svg">Sample SVG icon</option>
+</select>
+<select id="rect_zoom" name="rect_zoom">
+	<option value="1">100% zoom (1x)</option>
+	<option value="2">200% zoom (2x / "Retina")</option>
+</select>
+<button id="screenshot">Save</button>
+</fieldset>
+</form>
+<h2>preview</h2>
+<div id="output_container">
+	<div id="output_element"></div>
+</div>
+<h2>output</h2>
+<script
+			  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+			  crossorigin="anonymous"></script>
+<script src="html2canvas.min.js"></script>
+<script type="text/javascript">
+var rect_size = 100;
+var offset = 5;
+function updateRect() {
+	$("#output_element").find("img").remove();
+	$("#output_element").css({
+		"background-color": $("#rect_bg_color").first().val(),
+		"border": "1px white solid",
+		"border-radius": $("#rect_border_radius").first().val(),
+		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size * parseInt($("#rect_zoom").first().val(), 10)) + "px",
+		"height": rect_size  * parseInt($("#rect_zoom").first().val(), 10) + "px"
+	});
+	if ($("#rect_icon").val() != "") {
+		var ic = new Image();
+			ic.src = $("#rect_icon").val();
+			var h = rect_size * parseInt($("#rect_zoom").first().val(), 10) / 3;
+			$(ic).css({
+				"height": h + "px",	
+				"float": "right",
+				"margin-right": offset,
+				"margin-top": rect_size  * parseInt($("#rect_zoom").first().val(), 10) - h - offset
+			});
+	}
+	$("#output_element").append(ic);
+}
+$(document).ready(function (){
+	$("#rect_width").change(updateRect);
+	$("#rect_bg_color").change(updateRect);
+	$("#rect_border_radius").change(updateRect);
+	$("#rect_icon").change(updateRect);
+	$("#rect_zoom").change(updateRect);
+	updateRect();
+	
+	$("#screenshot").click(function() {
+		var canvas = document.createElement("canvas");
+		html2canvas(document.querySelector("#output_element")).then(canvas => {
+    		document.body.appendChild(canvas);
+		});
+		var img = new Image();
+			img.id = "output_img";
+		img.src = canvas.toDataURL();
+		$(canvas).remove();
+		document.body.appendChild(img);
+		return false;
+	});
+});
+</script>
+</body>
+</html>
