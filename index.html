@@ -67,15 +67,15 @@ function updateRect() {
 		"background-color": $("#rect_bg_color").first().val(),
 		"border": "1px white solid",
 		"border-radius": $("#rect_border_radius").first().val(),
-		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size * parseInt($("#rect_zoom").first().val(), 10)) + "px",
-		"height": rect_size  * parseInt($("#rect_zoom").first().val(), 10) + "px"
+		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size * parseInt($("#rect_zoom").first().val(), 10)),
+		"height": rect_size  * parseInt($("#rect_zoom").first().val(), 10)
 	});
 	if ($("#rect_icon").val() != "") {
 		var ic = new Image();
 			ic.src = $("#rect_icon").val();
 			var h = rect_size * parseInt($("#rect_zoom").first().val(), 10) / 3;
 			$(ic).css({
-				"height": h + "px",	
+				"height": h,	
 				"float": "right",
 				"margin-right": offset,
 				"margin-top": rect_size  * parseInt($("#rect_zoom").first().val(), 10) - h - offset
