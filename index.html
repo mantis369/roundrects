@@ -61,10 +61,6 @@ margin:auto;
 	<option value="">No icon</option>
 	<option value="icon.svg">Sample SVG icon</option>
 </select>
-<select id="rect_zoom" name="rect_zoom">
-	<option value="1">100% zoom (1x)</option>
-	<option value="2">200% zoom (2x / "Retina")</option>
-</select>
 <select id="rect_padding" name="rect_padding">
 	<option value="0">0px padding</option>
 	<option value="1">1px padding</option>
@@ -200,8 +196,8 @@ function updateRect() {
 		"border": "1px white solid",
 		"border-radius": $("#rect_border_radius").first().val(),
 		"overflow": "hidden",
-		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size * parseInt($("#rect_zoom").first().val(), 10)),
-		"height": rect_size  * parseInt($("#rect_zoom").first().val(), 10)
+		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size,
+		"height": rect_size
 	});
 	
 	var tx = [$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join("<br/>");
@@ -222,12 +218,12 @@ function updateRect() {
 	if ($("#rect_icon").val() != "") {
 		var ic = new Image();
 			ic.src = $("#rect_icon").val();
-			var h = rect_size * parseInt($("#rect_zoom").first().val(), 10) / 3;
+			var h = rect_size / 3;
 			$(ic).css({
 				"height": h,	
 				"float": "right",
 				"margin-right": padding,
-				"margin-top": rect_size  * parseInt($("#rect_zoom").first().val(), 10) - h - padding
+				"margin-top": rect_size  - h - padding
 			});
 	}
 	$("#output_element").append(ic);
@@ -247,7 +243,6 @@ $(document).ready(function (){
 	$("#rect_palette").change(updateRect);
 	$("#rect_border_radius").change(updateRect);
 	$("#rect_icon").change(updateRect);
-	$("#rect_zoom").change(updateRect);
 	$("#rect_padding").change(updateRect);
 	$("#text_line1").blur(updateRect);
 	$("#text_line2").blur(updateRect);
