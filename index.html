@@ -60,6 +60,7 @@ height:100px;
 <h3>Tile</h3>
 <label>Width:
 	<select id="rect_width" name="rect_width">
+		<option value="0.5">50px</option>
 		<option value="1">100px</option>
 		<option value="2" selected="seleected">200px</option>
 	</select>
@@ -71,7 +72,8 @@ height:100px;
 		<option value="#ff6a00">Pumpkin</option>
 		<option value="#f2a200">Honey</option>
 		<option value="#aaafb3">Cloud</option>
-		<option value="#a1c4d0">Ice</option>	
+		<option value="#a1c4d0">Ice</option>
+		<option value="white">White</option>
 	</select>
 </label>
 <label>Secondary color:
@@ -174,30 +176,44 @@ function update() {
 	var p = $("#rect_palette").first().val();
 	if ((color in palette) && (p in palette[color])) color = palette[color][p];
 	
+	var mode = (color === "white") ? "sag" : "normal";
+	
+	var w =  new Number($("#rect_width").first().val()) * rect_size;
+	
 	$("#output_element").find("span").remove();
 	$("#output_element").find("img").remove();
 	$("#output_element").css({
 		"background-color": color,
-		"border": "1px white solid",
+		"border": (color ==="white") ? "4px #991f3d solid" : "1px white solid",
 		"border-radius": 10,
 		"overflow": "hidden",
-		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size),
-		"height": rect_size
+		"width":  w,
+		"height": (w > 50) ? rect_size : w
 	});
 	
-	var tx = [$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join("<br/>");
+	var tx = (mode == "sag") ? $.trim($("#text_line1").val()) : [$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join("<br/>");
 	var sp = document.createElement("span");
 	$(sp).html(tx).css({
+		"background-color": (mode == "sag") ? "#991f3d" : "inherit",
 		"border": "1px " + color + " solid",
+		"border-radius": (mode == "sag") ? "50%" : "0",
 		"float": "left",
-		"color": $("#text_color").val(),
+		"color": (mode == "sag") ? "white" : $("#text_color").val(),
 		"font-family": "Helvetica, Arial, sans-serif",
 		"font-size": "100%",
 		"font-weight": "bold",
 		"line-height": "100%",
-		"margin-left": padding + 5,
-		"margin-top": padding + 5
+		"margin-left": (mode == "sag") ? 2 : padding + 5,
+		"margin-top": (mode == "sag") ? 2 : padding + 5
 	});
+	if (mode == "sag") {
+		$(sp).css({
+			"text-align": "center",
+			"padding-top": 2,
+			"width": "1.1em",
+			"height": "2.1ex"
+		});	
+	}
 	$("#output_element").append(sp);	
 	
 	if ($("#rect_icon").val() != "") {
@@ -206,10 +222,15 @@ function update() {
 			var h = parseInt(rect_size / 3, 10);
 			$(ic).css({
 				"height": h,	
-				"float": "right",
-				"margin-right": padding,
-				"margin-top": rect_size  - h - padding
+				"float": (mode == "sag") ? "none" : "right",
+				"margin-right": (mode == "sag") ? 0 : padding,
+				"margin-top": (mode == "sag") ? -4 : rect_size  - h - padding
 			});
+			if (mode == "sag") {
+				$(ic).css({
+					"margin-left": (h / 3) - 3
+				});	
+			}
 	}
 	$("#output_element").append(ic);
 	$("#output_container a").attr({
