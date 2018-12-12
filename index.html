@@ -124,10 +124,6 @@ margin:auto;
 	<option value="160">160% line height</option>
 	<option value="165">165% line height</option>			
 </select>
-<select id="text_weight" name="text_weight">
-	<option value="normal">normal</option>
-	<option value="bold" selected="selected">bold</option>
-</select>
 </fieldset>
 </form>
 <h2>preview</h2>
@@ -201,7 +197,7 @@ function updateRect() {
 		"color": $("#text_color").val(),
 		"font-family": "Helvetica, Arial, sans-serif",
 		"font-size": $("#text_size").val() + "%",
-		"font-weight": $("#text_weight").val(),
+		"font-weight": "bold",
 		"line-height": $("#text_lineheight").val() + "%",
 		"margin-left": padding + 5,
 		"margin-top": padding + 5
@@ -242,7 +238,6 @@ $(document).ready(function (){
 	$("#text_color").change(updateRect);
 	$("#text_size").change(updateRect);
 	$("#text_lineheight").change(updateRect);
-	$("#text_weight").change(updateRect);
 	updateRect();
 	
 	$("#screenshot").click(function() {
