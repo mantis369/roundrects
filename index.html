@@ -7,6 +7,10 @@ body {
 font-family:sans-serif;	
 }
 
+fieldset {
+border:0 none;	
+}
+
 h1, h2, h3 {
 margin:0;	
 }
@@ -32,12 +36,19 @@ margin:auto;
 	<option value="2">2x width</option>
 </select>
 <select id="rect_bg_color" name="rect_bg_color">
-	<option value="#e31937">Red (Cherry)</option>
+	<option value="#e61739">Red (Cherry)</option>
 	<option value="#991f3d" selected="selected">Beet</option>
 	<option value="#ff6a00">Pumpkin</option>
 	<option value="#f2a200">Honey</option>
-	<option value="#a5acb0">Cloud</option>
+	<option value="#aaafb3">Cloud</option>
 	<option value="#a1c4d0">Ice</option>	
+</select>
+<select id="rect_palette" name="rect_palette">
+	<option value="Lighter">Lighter</option>
+	<option value="Main Palette" selected="selected">Main Palette</option>
+	<option value="Dark">Dark</option>
+	<option value="Darker">Darker</option>
+	<option value="Darkest">Darkest</option>
 </select>
 <select id="rect_border_radius" name="rect_border_radius">
 	<option value="5px">5px border radius</option>
@@ -144,12 +155,48 @@ margin:auto;
 <script type="text/javascript">
 var rect_size = 100;
 
+var palette = {
+	"#e61739": {
+		"Dark": "#cc0033",
+		"Darker": "b3002d"
+	},
+	"#991f3d": {
+		"Lighter": "#e6dadd",
+		"Dark": "#660a21"
+	},
+	"#ff6a00": {
+		"Lighter": "#f2ddce",
+		"Dark": "#c15000"
+	},
+	"#f2a200": {
+		"Lighter": "#f2e6ce",
+		"Dark": "#cc8800",
+		"Darker": "#996600"
+	},
+	"#aaafb3": {
+		"Lighter": "#e4e8eb",
+		"Dark": "#787d80",
+		"Darker": "#545759",
+		"Darkest": "#2e3133"
+	},
+	"#a1c4d0": {
+		"Lighter": "#daecf2",
+		"Dark": "#6ba1b3",
+		"Darker": "#407080",
+		"Darkest": "#1f414d"
+	}
+};
+
 function updateRect() {
 	var padding = parseInt($("#rect_padding").first().val(), 10);
+	var color = $("#rect_bg_color").first().val();
+	var p = $("#rect_palette").first().val();
+	if ((color in palette) && (p in palette[color])) color = palette[color][p];
+	
 	$("#output_element").find("span").remove();
 	$("#output_element").find("img").remove();
 	$("#output_element").css({
-		"background-color": $("#rect_bg_color").first().val(),
+		"background-color": color,
 		"border": "1px white solid",
 		"border-radius": $("#rect_border_radius").first().val(),
 		"overflow": "hidden",
@@ -197,6 +244,7 @@ $(document).ready(function (){
 	
 	$("#rect_width").change(updateRect);
 	$("#rect_bg_color").change(updateRect);
+	$("#rect_palette").change(updateRect);
 	$("#rect_border_radius").change(updateRect);
 	$("#rect_icon").change(updateRect);
 	$("#rect_zoom").change(updateRect);
