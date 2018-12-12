@@ -50,13 +50,6 @@ margin:auto;
 	<option value="Darker">Darker</option>
 	<option value="Darkest">Darkest</option>
 </select>
-<select id="rect_border_radius" name="rect_border_radius">
-	<option value="5px">5px border radius</option>
-	<option value="10px" selected="selected">10px border radius</option>
-	<option value="15px">15px border radius</option>
-	<option value="20px">20px border radius</option>
-	<option value="25px">25px border radius</option>
-</select>
 <select id="rect_icon" name="rect_icon">
 	<option value="">No icon</option>
 	<option value="icon.svg">Sample SVG icon</option>
@@ -194,7 +187,7 @@ function updateRect() {
 	$("#output_element").css({
 		"background-color": color,
 		"border": "1px white solid",
-		"border-radius": $("#rect_border_radius").first().val(),
+		"border-radius": 10,
 		"overflow": "hidden",
 		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size,
 		"height": rect_size
@@ -241,7 +234,6 @@ $(document).ready(function (){
 	$("#rect_width").change(updateRect);
 	$("#rect_bg_color").change(updateRect);
 	$("#rect_palette").change(updateRect);
-	$("#rect_border_radius").change(updateRect);
 	$("#rect_icon").change(updateRect);
 	$("#rect_padding").change(updateRect);
 	$("#text_line1").blur(updateRect);
