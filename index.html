@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>roundrects</title>
+<title>TileMaker</title>
 <style type="text/css">
 body {
 font-family:sans-serif;	
@@ -9,72 +9,124 @@ font-family:sans-serif;
 
 fieldset {
 border:0 none;	
+float:left;
 }
 
 h1, h2, h3 {
+clear:both;
 margin:0;	
 }
 
+label {
+display:block;
+font-size:80%;
+font-weight:bold;
+margin:5px 0;
+}
+
+hr {
+clear:both;	
+}
+
 #output_container {
-width:100%;
-height:50%;
+float:left;
+width:250px;
+height:100px;
 margin:30px;	
+}
+
+#output_container a {
+text-decoration:none !important;
 }
 
 #output_element {
 margin:auto;	
 }
+
+#output_element:hover span {
+color:black !important;
+}
+
+#code {
+width:950px;
+height:100px;	
+}
 </style>
 </head>
 <body>
-<h1>roundrects</h1>
+<h1>TileMaker</h1>
 <form onsubmit="return:false;">
 <fieldset>
-<h3>rectangle</h3>
-<select id="rect_width" name="rect_width">
-	<option value="1">100px</option>
-	<option value="2" selected="seleected">200px</option>
-</select>
-<select id="rect_bg_color" name="rect_bg_color">
-	<option value="#e61739">Red (Cherry)</option>
-	<option value="#991f3d" selected="selected">Beet</option>
-	<option value="#ff6a00">Pumpkin</option>
-	<option value="#f2a200">Honey</option>
-	<option value="#aaafb3">Cloud</option>
-	<option value="#a1c4d0">Ice</option>	
-</select>
-<select id="rect_palette" name="rect_palette">
-	<option value="Lighter">Lighter</option>
-	<option value="Main Palette" selected="selected">Main Palette</option>
-	<option value="Dark">Dark</option>
-	<option value="Darker">Darker</option>
-	<option value="Darkest">Darkest</option>
-</select>
-<select id="rect_icon" name="rect_icon">
-	<option value="">No icon</option>
-	<option value="icon.svg">Sample SVG icon</option>
-</select>
-<button id="screenshot">Render to PNG image</button>
+<h3>Tile</h3>
+<label>Width:
+	<select id="rect_width" name="rect_width">
+		<option value="1">100px</option>
+		<option value="2" selected="seleected">200px</option>
+	</select>
+</label>
+<label>Primary color:
+	<select id="rect_bg_color" name="rect_bg_color">
+		<option value="#e61739">Red (Cherry)</option>
+		<option value="#991f3d" selected="selected">Beet</option>
+		<option value="#ff6a00">Pumpkin</option>
+		<option value="#f2a200">Honey</option>
+		<option value="#aaafb3">Cloud</option>
+		<option value="#a1c4d0">Ice</option>	
+	</select>
+</label>
+<label>Secondary color:
+	<select id="rect_palette" name="rect_palette">
+		<option value="Lighter">Lighter</option>
+		<option value="Main Palette" selected="selected">Main Palette</option>
+		<option value="Dark">Dark</option>
+		<option value="Darker">Darker</option>
+		<option value="Darkest">Darkest</option>
+	</select>
+</label>
+<label>Icon:
+	<select id="rect_icon" name="rect_icon">
+		<option value="">No icon</option>
+		<option value="icon.svg">Sample SVG icon</option>
+	</select>
+</label>
+<button id="screenshot">Render to PNG image at bottom</button>
 </fieldset>
 <fieldset>
-<h3>text</h3>
-	<fieldset style="display:inline">
-		<input type="text" id="text_line1" name="text_line1"/><br/>
-		<input type="text" id="text_line2" name="text_line2"/><br/>
-		<input type="text" id="text_line3" name="text_line2"/>
-	</fieldset>
-<select id="text_color" name="text_color">
-	<option value="white">white</option>
-	<option value="#ccc">light gray (#ccc)</option>
-	<option value="#666">dark gray (#666)</option>
-	<option value="black">black</option>
-</select>
+<h3>Text</h3>
+<fieldset style="display:inline">
+	<input type="text" id="text_line1" name="text_line1"/><br/>
+	<input type="text" id="text_line2" name="text_line2"/><br/>
+	<input type="text" id="text_line3" name="text_line2"/>
+</fieldset>
+<label>Color:
+	<select id="text_color" name="text_color">
+		<option value="white">White</option>
+		<option value="#ccc">Light gray (#ccc)</option>
+		<option value="#666">Dark gray (#666)</option>
+		<option value="black">Black</option>
+	</select>
+</label>
+</fieldset>
+<fieldset>
+<h3>Hyperlink</h3>
+<input type="text" id="hyperlink" name="hyperlink"/><br/>
+<label>Opens in:
+	<select id="link_target" name="link_target">
+		<option value="_self">Same tab</option>
+		<option value="_blank">New tab</option>
+	</select>
+</label>
 </fieldset>
 </form>
-<h2>preview</h2>
+<h2>Preview</h2>
 <div id="output_container">
-	<div id="output_element"></div>
+	<a>
+		<div id="output_element"></div>
+	</a>
 </div>
+<h2>Code</h2>
+<textarea id="code" name="code"></textarea>
+<hr/>
 <script
 			  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 			  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -117,7 +169,7 @@ var palette = {
 	}
 };
 
-function updateRect() {
+function update() {
 	var color = $("#rect_bg_color").first().val();
 	var p = $("#rect_palette").first().val();
 	if ((color in palette) && (p in palette[color])) color = palette[color][p];
@@ -151,7 +203,7 @@ function updateRect() {
 	if ($("#rect_icon").val() != "") {
 		var ic = new Image();
 			ic.src = $("#rect_icon").val();
-			var h = rect_size / 3;
+			var h = parseInt(rect_size / 3, 10);
 			$(ic).css({
 				"height": h,	
 				"float": "right",
@@ -160,6 +212,12 @@ function updateRect() {
 			});
 	}
 	$("#output_element").append(ic);
+	$("#output_container a").attr({
+		"href": $("#hyperlink").first().val(),
+		"target": $("#link_target").first().val(),
+		"title": $.trim([$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join(" "))
+	});
+	$("#code").val($("#output_container").html().replace(/\t/g, "").replace(/\n/g, "").replace("id=\"output_element\"", "class=\"navigation_tile\""));
 }
 $(document).ready(function (){
 	var icn;
@@ -171,15 +229,17 @@ $(document).ready(function (){
 		}
 	}
 	
-	$("#rect_width").change(updateRect);
-	$("#rect_bg_color").change(updateRect);
-	$("#rect_palette").change(updateRect);
-	$("#rect_icon").change(updateRect);
-	$("#text_line1").blur(updateRect);
-	$("#text_line2").blur(updateRect);
-	$("#text_line3").blur(updateRect);
-	$("#text_color").change(updateRect);
-	updateRect();
+	$("#rect_width").change(update);
+	$("#rect_bg_color").change(update);
+	$("#rect_palette").change(update);
+	$("#rect_icon").change(update);
+	$("#text_line1").blur(update);
+	$("#text_line2").blur(update);
+	$("#text_line3").blur(update);
+	$("#text_color").change(update);
+	$("#hyperlink").blur(update);
+	$("#link_target").change(update);
+	update();
 	
 	$("#screenshot").click(function() {
 		var canvas = document.createElement("canvas");
@@ -191,6 +251,10 @@ $(document).ready(function (){
 		$(canvas).remove();
 		document.body.appendChild(img);
 		return false;
+	});
+	
+	$("#code").focus(function() {
+		$("#code").select();
 	});
 });
 </script>
