@@ -110,20 +110,6 @@ margin:auto;
 	<option value="155">155% text size</option>
 	<option value="160">160% text size</option>									
 </select>
-<select id="text_lineheight" name="text_lineheight">
-	<option value="100">100% line height</option>
-	<option value="110">110% line height</option>
-	<option value="120">120% line height</option>
-	<option value="125">125% line height</option>
-	<option value="130">130% line height</option>
-	<option value="135">135% line height</option>
-	<option value="140">140% line height</option>
-	<option value="145">145% line height</option>	
-	<option value="150">150% line height</option>
-	<option value="155">155% line height</option>	
-	<option value="160">160% line height</option>
-	<option value="165">165% line height</option>			
-</select>
 </fieldset>
 </form>
 <h2>preview</h2>
@@ -198,7 +184,7 @@ function updateRect() {
 		"font-family": "Helvetica, Arial, sans-serif",
 		"font-size": $("#text_size").val() + "%",
 		"font-weight": "bold",
-		"line-height": $("#text_lineheight").val() + "%",
+		"line-height": "100%",
 		"margin-left": padding + 5,
 		"margin-top": padding + 5
 	});
@@ -237,7 +223,6 @@ $(document).ready(function (){
 	$("#text_line3").blur(updateRect);
 	$("#text_color").change(updateRect);
 	$("#text_size").change(updateRect);
-	$("#text_lineheight").change(updateRect);
 	updateRect();
 	
 	$("#screenshot").click(function() {
