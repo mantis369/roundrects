@@ -207,7 +207,7 @@ function updateRect() {
 	var tx = [$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join("<br/>");
 	var sp = document.createElement("span");
 	$(sp).html(tx).css({
-		"border": "1px" + $("#rect_bg_color").first().val() + "solid",
+		"border": "1px " + color + " solid",
 		"float": "left",
 		"color": $("#text_color").val(),
 		"font-family": "Helvetica, Arial, sans-serif",
