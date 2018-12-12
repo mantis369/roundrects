@@ -32,8 +32,8 @@ margin:auto;
 <fieldset>
 <h3>rectangle</h3>
 <select id="rect_width" name="rect_width">
-	<option value="1">1x width</option>
-	<option value="2">2x width</option>
+	<option value="1">100px</option>
+	<option value="2" selected="seleected">200px</option>
 </select>
 <select id="rect_bg_color" name="rect_bg_color">
 	<option value="#e61739">Red (Cherry)</option>
@@ -54,29 +54,6 @@ margin:auto;
 	<option value="">No icon</option>
 	<option value="icon.svg">Sample SVG icon</option>
 </select>
-<select id="rect_padding" name="rect_padding">
-	<option value="0">0px padding</option>
-	<option value="1">1px padding</option>
-	<option value="2">2px padding</option>
-	<option value="3">3px padding</option>			
-	<option value="4">4px padding</option>
-	<option value="5" selected="selected">5px padding</option>
-	<option value="6">6px padding</option>
-	<option value="7">7px padding</option>
-	<option value="8">8px padding</option>
-	<option value="9">9px padding</option>			
-	<option value="10">10px padding</option>
-	<option value="11">11px padding</option>
-	<option value="12">12px padding</option>
-	<option value="13">13px padding</option>			
-	<option value="14">14px padding</option>
-	<option value="15">15px padding</option>
-	<option value="16">16px padding</option>
-	<option value="17">17px padding</option>
-	<option value="18">18px padding</option>
-	<option value="19">19px padding</option>			
-	<option value="20">20px padding</option>		
-</select>
 <button id="screenshot">Save</button>
 </fieldset>
 <fieldset>
@@ -91,24 +68,6 @@ margin:auto;
 	<option value="#ccc">light gray (#ccc)</option>
 	<option value="#666">dark gray (#666)</option>
 	<option value="black">black</option>
-</select>
-<select id="text_size" name="text_size">
-	<option value="80">80% text size</option>
-	<option value="85">85% text size</option>
-	<option value="90">90% text size</option>
-	<option value="95">95% text size</option>
-	<option value="100">100% text size</option>
-	<option value="110">110% text size</option>
-	<option value="115">115% text size</option>
-	<option value="120">120% text size</option>
-	<option value="125">125% text size</option>
-	<option value="130">130% text size</option>
-	<option value="135">135% text size</option>
-	<option value="140">140% text size</option>
-	<option value="145">145% text size</option>
-	<option value="150">150% text size</option>
-	<option value="155">155% text size</option>
-	<option value="160">160% text size</option>									
 </select>
 </fieldset>
 </form>
@@ -125,6 +84,7 @@ margin:auto;
 <script src="icons.js"></script>
 <script type="text/javascript">
 var rect_size = 100;
+var padding = 5;
 
 var palette = {
 	"#e61739": {
@@ -159,7 +119,6 @@ var palette = {
 };
 
 function updateRect() {
-	var padding = parseInt($("#rect_padding").first().val(), 10);
 	var color = $("#rect_bg_color").first().val();
 	var p = $("#rect_palette").first().val();
 	if ((color in palette) && (p in palette[color])) color = palette[color][p];
@@ -171,7 +130,7 @@ function updateRect() {
 		"border": "1px white solid",
 		"border-radius": 10,
 		"overflow": "hidden",
-		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size,
+		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size),
 		"height": rect_size
 	});
 	
@@ -182,7 +141,7 @@ function updateRect() {
 		"float": "left",
 		"color": $("#text_color").val(),
 		"font-family": "Helvetica, Arial, sans-serif",
-		"font-size": $("#text_size").val() + "%",
+		"font-size": "100%",
 		"font-weight": "bold",
 		"line-height": "100%",
 		"margin-left": padding + 5,
@@ -217,12 +176,10 @@ $(document).ready(function (){
 	$("#rect_bg_color").change(updateRect);
 	$("#rect_palette").change(updateRect);
 	$("#rect_icon").change(updateRect);
-	$("#rect_padding").change(updateRect);
 	$("#text_line1").blur(updateRect);
 	$("#text_line2").blur(updateRect);
 	$("#text_line3").blur(updateRect);
 	$("#text_color").change(updateRect);
-	$("#text_size").change(updateRect);
 	updateRect();
 	
 	$("#screenshot").click(function() {
