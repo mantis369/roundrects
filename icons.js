@@ -1,0 +1,102 @@
+var roundrects_icons = {
+"Buildings": [
+"Home office",
+"Work office - data center"
+],
+"Communication and collaboration": [
+"Chat",
+"Chat 2",
+"Collaboration",
+"Email",
+"Network",
+"Phone",
+"Satellite",
+"Smart phone",
+"Smart watch",
+"Support",
+"Twitter",
+"User",
+"Users",
+"Video",
+"YouTube"
+],
+"Computers": [
+"Archive",
+"Backup",
+"Battery",
+"Cable",
+"Computer",
+"Database",
+"File",
+"Firewall",
+"Laptop",
+"Network 2",
+"Printer",
+"Router",
+"Security",
+"Security 2",
+"Storage",
+"Tablet",
+"USB",
+"Virtual environment",
+"Virtual server",
+"Virtual sync",
+"Virtual workplace",
+"Webcam",
+"WiFi",
+"WiFi 2",
+"Wireless",
+"Zip"
+],
+"Environment": [
+"Planet",
+"Recycle",
+"Weather",
+"Weather 2"
+],
+"Industries": [
+"Communications",
+"Financial services",
+"Government",
+"Health",
+"Manufacturing",
+"Oil and gas",
+"Post and logistics",
+"Retail and consumer services",
+"Transportation",
+"Utilities"
+],
+"Miscellaneous objects": [
+"Artist palette",
+"Diagram",
+"Graph",
+"Key",
+"Pen",
+"Speedometer",
+"Tools"
+],
+"Symbols": [
+"Check mark",
+"Forward",
+"Highest availability",
+"Location",
+"Pause",
+"Play",
+"Power",
+"Process",
+"Prohibited",
+"Question mark",
+"Rewind",
+"Search",
+"Stop",
+"Sync",
+"Trends"
+],
+"Technologies": [
+"Big data analytics",
+"Cybersecurity",
+"Digital transformation",
+"IP solutions",
+"IT modernization"
+]
+};

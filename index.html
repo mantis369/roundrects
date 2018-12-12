@@ -140,6 +140,7 @@ margin:auto;
 			  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
 			  crossorigin="anonymous"></script>
 <script src="html2canvas.min.js"></script>
+<script src="icons.js"></script>
 <script type="text/javascript">
 var rect_size = 100;
 
@@ -151,6 +152,7 @@ function updateRect() {
 		"background-color": $("#rect_bg_color").first().val(),
 		"border": "1px white solid",
 		"border-radius": $("#rect_border_radius").first().val(),
+		"overflow": "hidden",
 		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size * parseInt($("#rect_zoom").first().val(), 10)),
 		"height": rect_size  * parseInt($("#rect_zoom").first().val(), 10)
 	});
@@ -158,14 +160,15 @@ function updateRect() {
 	var tx = [$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join("<br/>");
 	var sp = document.createElement("span");
 	$(sp).html(tx).css({
+		"border": "1px" + $("#rect_bg_color").first().val() + "solid",
 		"float": "left",
 		"color": $("#text_color").val(),
 		"font-family": "Helvetica, Arial, sans-serif",
 		"font-size": $("#text_size").val() + "%",
 		"font-weight": $("#text_weight").val(),
 		"line-height": $("#text_lineheight").val() + "%",
-		"margin-left": padding,
-		"margin-top": padding
+		"margin-left": padding + 5,
+		"margin-top": padding + 5
 	});
 	$("#output_element").append(sp);	
 	
@@ -183,6 +186,15 @@ function updateRect() {
 	$("#output_element").append(ic);
 }
 $(document).ready(function (){
+	var icn;
+	for (var category in roundrects_icons) {
+		$("#rect_icon").append("<option value=\"\">--" + category + "</option>");	
+		for (var i = 0; i < roundrects_icons[category].length; i++) {
+			icn = roundrects_icons[category][i];
+			$("#rect_icon").append("<option value=\"icons/" + category + "/" + icn + ".png\">" + icn + "</option>");
+		}
+	}
+	
 	$("#rect_width").change(updateRect);
 	$("#rect_bg_color").change(updateRect);
 	$("#rect_border_radius").change(updateRect);
