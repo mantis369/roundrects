@@ -3,6 +3,14 @@
 <head>
 <title>roundrects</title>
 <style type="text/css">
+body {
+font-family:sans-serif;	
+}
+
+h1, h2, h3 {
+margin:0;	
+}
+
 #output_container {
 width:100%;
 height:50%;
@@ -18,6 +26,7 @@ margin:auto;
 <h1>roundrects</h1>
 <form onsubmit="return:false;">
 <fieldset>
+<h3>rectangle</h3>
 <select id="rect_width" name="rect_width">
 	<option value="1">1x width</option>
 	<option value="2">2x width</option>
@@ -45,7 +54,80 @@ margin:auto;
 	<option value="1">100% zoom (1x)</option>
 	<option value="2">200% zoom (2x / "Retina")</option>
 </select>
+<select id="rect_padding" name="rect_padding">
+	<option value="0">0px padding</option>
+	<option value="1">1px padding</option>
+	<option value="2">2px padding</option>
+	<option value="3">3px padding</option>			
+	<option value="4">4px padding</option>
+	<option value="5" selected="selected">5px padding</option>
+	<option value="6">6px padding</option>
+	<option value="7">7px padding</option>
+	<option value="8">8px padding</option>
+	<option value="9">9px padding</option>			
+	<option value="10">10px padding</option>
+	<option value="11">11px padding</option>
+	<option value="12">12px padding</option>
+	<option value="13">13px padding</option>			
+	<option value="14">14px padding</option>
+	<option value="15">15px padding</option>
+	<option value="16">16px padding</option>
+	<option value="17">17px padding</option>
+	<option value="18">18px padding</option>
+	<option value="19">19px padding</option>			
+	<option value="20">20px padding</option>		
+</select>
 <button id="screenshot">Save</button>
+</fieldset>
+<fieldset>
+<h3>text</h3>
+	<fieldset style="display:inline">
+		<input type="text" id="text_line1" name="text_line1"/><br/>
+		<input type="text" id="text_line2" name="text_line2"/><br/>
+		<input type="text" id="text_line3" name="text_line2"/>
+	</fieldset>
+<select id="text_color" name="text_color">
+	<option value="white">white</option>
+	<option value="#ccc">light gray (#ccc)</option>
+	<option value="#666">dark gray (#666)</option>
+	<option value="black">black</option>
+</select>
+<select id="text_size" name="text_size">
+	<option value="80">80% text size</option>
+	<option value="85">85% text size</option>
+	<option value="90">90% text size</option>
+	<option value="95">95% text size</option>
+	<option value="100">100% text size</option>
+	<option value="110">110% text size</option>
+	<option value="115">115% text size</option>
+	<option value="120">120% text size</option>
+	<option value="125">125% text size</option>
+	<option value="130">130% text size</option>
+	<option value="135">135% text size</option>
+	<option value="140">140% text size</option>
+	<option value="145">145% text size</option>
+	<option value="150">150% text size</option>
+	<option value="155">155% text size</option>
+	<option value="160">160% text size</option>									
+</select>
+<select id="text_lineheight" name="text_lineheight">
+	<option value="100">100% line height</option>
+	<option value="110">110% line height</option>
+	<option value="120">120% line height</option>
+	<option value="125">125% line height</option>
+	<option value="130">130% line height</option>
+	<option value="135">135% line height</option>
+	<option value="140">140% line height</option>
+	<option value="145">145% line height</option>	
+	<option value="150">150% line height</option>
+	<option value="155">155% line height</option>	
+	<option value="160">160% line height</option>
+	<option value="165">165% line height</option>			
+</select>
+<select id="text_weight" name="text_weight">
+	<option value="normal">normal</option>
+	<option value="bold" selected="selected">bold</option>
+</select>
 </fieldset>
 </form>
 <h2>preview</h2>
@@ -60,8 +142,10 @@ margin:auto;
 <script src="html2canvas.min.js"></script>
 <script type="text/javascript">
 var rect_size = 100;
-var offset = 5;
+
 function updateRect() {
+	var padding = parseInt($("#rect_padding").first().val(), 10);
+	$("#output_element").find("span").remove();
 	$("#output_element").find("img").remove();
 	$("#output_element").css({
 		"background-color": $("#rect_bg_color").first().val(),
@@ -70,6 +154,21 @@ function updateRect() {
 		"width": (parseInt($("#rect_width").first().val(), 10) * rect_size * parseInt($("#rect_zoom").first().val(), 10)),
 		"height": rect_size  * parseInt($("#rect_zoom").first().val(), 10)
 	});
+	
+	var tx = [$("#text_line1").val(), $("#text_line2").val(), $("#text_line3").val()].join("<br/>");
+	var sp = document.createElement("span");
+	$(sp).html(tx).css({
+		"float": "left",
+		"color": $("#text_color").val(),
+		"font-family": "Helvetica, Arial, sans-serif",
+		"font-size": $("#text_size").val() + "%",
+		"font-weight": $("#text_weight").val(),
+		"line-height": $("#text_lineheight").val() + "%",
+		"margin-left": padding,
+		"margin-top": padding
+	});
+	$("#output_element").append(sp);	
+	
 	if ($("#rect_icon").val() != "") {
 		var ic = new Image();
 			ic.src = $("#rect_icon").val();
@@ -77,8 +176,8 @@ function updateRect() {
 			$(ic).css({
 				"height": h,	
 				"float": "right",
-				"margin-right": offset,
-				"margin-top": rect_size  * parseInt($("#rect_zoom").first().val(), 10) - h - offset
+				"margin-right": padding,
+				"margin-top": rect_size  * parseInt($("#rect_zoom").first().val(), 10) - h - padding
 			});
 	}
 	$("#output_element").append(ic);
@@ -89,6 +188,14 @@ $(document).ready(function (){
 	$("#rect_border_radius").change(updateRect);
 	$("#rect_icon").change(updateRect);
 	$("#rect_zoom").change(updateRect);
+	$("#rect_padding").change(updateRect);
+	$("#text_line1").blur(updateRect);
+	$("#text_line2").blur(updateRect);
+	$("#text_line3").blur(updateRect);
+	$("#text_color").change(updateRect);
+	$("#text_size").change(updateRect);
+	$("#text_lineheight").change(updateRect);
+	$("#text_weight").change(updateRect);
 	updateRect();
 	
 	$("#screenshot").click(function() {
