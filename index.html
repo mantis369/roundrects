@@ -88,7 +88,10 @@ height:100px;
 <label>Icon:
 	<select id="rect_icon" name="rect_icon">
 		<option value="">No icon</option>
-		<option value="icon.svg">Sample SVG icon</option>
+		<option value="icon.svg">Sample SVG</option>
+		<option value="locked.svg">Locked SVG</option>
+		<option value="search.svg">Search SVG</option>
+		<option value="video.svg">Video SVG</option>
 	</select>
 </label>
 <button id="screenshot">Render to PNG image at bottom</button>
@@ -241,12 +244,14 @@ function update() {
 	$("#code").val($("#output_container").html().replace(/\t/g, "").replace(/\n/g, "").replace("id=\"output_element\"", "class=\"navigation_tile\""));
 }
 $(document).ready(function (){
-	var icn;
-	for (var category in roundrects_icons) {
-		$("#rect_icon").append("<option value=\"\">--" + category + "</option>");	
-		for (var i = 0; i < roundrects_icons[category].length; i++) {
-			icn = roundrects_icons[category][i];
-			$("#rect_icon").append("<option value=\"icons/" + category + "/" + icn + ".png\">" + icn + "</option>");
+	var icn = false;
+	if (icn) {
+		for (var category in roundrects_icons) {
+			$("#rect_icon").append("<option value=\"\">--" + category + "</option>");	
+			for (var i = 0; i < roundrects_icons[category].length; i++) {
+				icn = roundrects_icons[category][i];
+				$("#rect_icon").append("<option value=\"icons/" + category + "/" + icn + ".png\">" + icn + "</option>");
+			}
 		}
 	}
 	
